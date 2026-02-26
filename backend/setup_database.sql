@@ -63,7 +63,7 @@ ALTER SEQUENCE courses_id_seq RESTART WITH 1;
 ALTER SEQUENCE exams_id_seq RESTART WITH 1;
 
 -- ============================================
--- INSERT ALL 40 COLLEGES
+-- INSERT ALL 41 COLLEGES
 -- ============================================
 
 INSERT INTO campuses (name, location) VALUES
@@ -106,7 +106,8 @@ INSERT INTO campuses (name, location) VALUES
 ('Vidya Vikas Institute of Engineering (VVIET)', 'Bannur Road, Mysore - 570028'),
 ('Mysore College of Engineering (MYCEM)', 'T. Narasipura Road, Mysore'),
 ('B.N. Bahadur Institute of Management (BIMS)', 'Manasagangothri, Mysore - 570006'),
-('University School of Design', 'Manasagangothri, Mysore - 570006');
+('University School of Design', 'Manasagangothri, Mysore - 570006'),
+('Bharath Matha First Grade College', 'Koppa, Periyapatna Taluk - 571107');
 
 -- ============================================
 -- INSERT COURSES
@@ -287,7 +288,12 @@ INSERT INTO courses (name, campus_id, fees, eligibility, stream) VALUES
 ('MBA', 39, 85000, 'Any Bachelor''s Degree with 50% (45% for reserved categories)', 'Management'),
 
 -- 40. University School of Design
-('B.Arch', 40, 150000, '10+2 with Mathematics as a mandatory subject (45% aggregate)', 'Specialized');
+('B.Arch', 40, 150000, '10+2 with Mathematics as a mandatory subject (45% aggregate)', 'Specialized'),
+
+-- 41. Bharath Matha First Grade College
+('BCA', 41, 38000, '10+2 (any stream) with minimum 45% aggregate (40% for SC/ST/Cat-I)', 'Computer Applications'),
+('B.Com', 41, 34000, '10+2 in any stream (Commerce preferred)', 'Arts / Commerce'),
+('BBA', 41, 36000, '10+2 in any stream (Arts, Commerce, or Science)', 'Management');
 
 -- ============================================
 -- INSERT ENTRANCE EXAMS (Auto-generated)
