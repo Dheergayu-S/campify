@@ -1,0 +1,23 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #f6f9fc;
+}
+
+.main-content {
+  flex: 1;
+  margin-top: 60px;
+}
+
+.footer {
+  background: #0a2540;
+  color: #adbdcc;
+  text-align: center;
+  padding: 16px;
+  font-size: 13px;
+}
+
+.footer p {
+  margin: 0;
+}

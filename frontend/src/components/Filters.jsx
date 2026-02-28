@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { FiSearch, FiMapPin, FiBook, FiDollarSign } from 'react-icons/fi'
 import './Filters.css'
 
 const STREAMS = [
@@ -60,7 +61,7 @@ function Filters({
   return (
     <div className="filters-sidebar">
       <div className="filters-header">
-        <h3>🔍 All Filters</h3>
+        <h3><FiSearch style={{ marginRight: '8px' }} /> All Filters</h3>
         {hasActiveFilters && (
           <button className="clear-all-btn" onClick={clearAllFilters}>
             Clear All
@@ -86,7 +87,7 @@ function Filters({
           className="filter-title"
           onClick={() => setShowLocation(!showLocation)}
         >
-          <span>📍 Location</span>
+          <span><FiMapPin style={{ marginRight: '6px' }} /> Location</span>
           <span className="toggle-icon">{showLocation ? '▲' : '▼'}</span>
         </div>
         {showLocation && (
@@ -108,7 +109,7 @@ function Filters({
           className="filter-title"
           onClick={() => setShowStreams(!showStreams)}
         >
-          <span>📚 Streams {selectedStreams.length > 0 && `(${selectedStreams.length})`}</span>
+          <span><FiBook style={{ marginRight: '6px' }} /> Streams {selectedStreams.length > 0 && `(${selectedStreams.length})`}</span>
           <span className="toggle-icon">{showStreams ? '▲' : '▼'}</span>
         </div>
         {showStreams && (
@@ -133,15 +134,16 @@ function Filters({
           className="filter-title"
           onClick={() => setShowFees(!showFees)}
         >
-          <span>💰 Total Fees</span>
+          <span><FiDollarSign style={{ marginRight: '6px' }} /> Fee Range</span>
           <span className="toggle-icon">{showFees ? '▲' : '▼'}</span>
         </div>
         {showFees && (
           <div className="filter-content">
+            <div className="fee-label">Filter by course fees (₹/year)</div>
             <div className="fee-range">
               <input
                 type="number"
-                placeholder="Min"
+                placeholder="Min ₹"
                 value={minFee}
                 onChange={(e) => onMinFeeChange(e.target.value)}
                 onKeyDown={handleFeeKeyDown}
@@ -149,7 +151,7 @@ function Filters({
               <span className="fee-separator">to</span>
               <input
                 type="number"
-                placeholder="Max"
+                placeholder="Max ₹"
                 value={maxFee}
                 onChange={(e) => onMaxFeeChange(e.target.value)}
                 onKeyDown={handleFeeKeyDown}

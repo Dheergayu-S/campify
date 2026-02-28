@@ -1,99 +1,81 @@
-import { useState, useEffect } from 'react'
-import CampusCard from '../components/CampusCard'
-import Filters from '../components/Filters'
-import { getCampuses } from '../services/api'
-import './Home.css'
+import { Link } from 'react-router-dom';
+import { FiSearch, FiBarChart2, FiMessageCircle } from 'react-icons/fi';
+import { HiOutlineOfficeBuilding, HiOutlineBookOpen, HiOutlineCollection, HiOutlineLocationMarker } from 'react-icons/hi';
+import './Home.css';
 
-function Home() {
-  const [campuses, setCampuses] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [searchTerm, setSearchTerm] = useState('')
-  const [minFee, setMinFee] = useState('')
-  const [maxFee, setMaxFee] = useState('')
-  const [selectedStreams, setSelectedStreams] = useState([])
-  const [locationSearch, setLocationSearch] = useState('')
+const Home = () => {
+  const stats = [
+    { icon: <HiOutlineOfficeBuilding />, value: '41', label: 'Colleges' },
+    { icon: <HiOutlineBookOpen />, value: '150+', label: 'Courses' },
+    { icon: <HiOutlineCollection />, value: '6', label: 'Streams' },
+    { icon: <HiOutlineLocationMarker />, value: 'Mysore', label: 'Region' },
+  ];
 
-  useEffect(() => {
-    fetchCampuses()
-  }, [])
-
-  const fetchCampuses = async () => {
-    try {
-      const data = await getCampuses()
-      setCampuses(data)
-    } catch (error) {
-      console.error('Error fetching campuses:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const filteredCampuses = campuses.filter(campus => {
-    const matchesSearch = campus.name.toLowerCase().includes(searchTerm.toLowerCase())
-    
-    // Filter by location
-    const matchesLocation = locationSearch === '' || 
-      campus.location.toLowerCase().includes(locationSearch.toLowerCase())
-    
-    // Filter by fee range - check if any course falls within the range
-    const campusMinFee = campus.min_fee || 0
-    const campusMaxFee = campus.max_fee || 0
-    
-    // Campus matches if its fee range overlaps with filter range
-    const matchesMinFee = minFee === '' || campusMaxFee >= parseInt(minFee)
-    const matchesMaxFee = maxFee === '' || campusMinFee <= parseInt(maxFee)
-    
-    // Filter by selected streams - campus must have at least one course in selected streams
-    const matchesStream = selectedStreams.length === 0 || 
-      campus.courses?.some(course => selectedStreams.includes(course.stream))
-    
-    return matchesSearch && matchesLocation && matchesMinFee && matchesMaxFee && matchesStream
-  })
-
-  if (loading) {
-    return <div className="loading">Loading...</div>
-  }
+  const featuredColleges = [
+    { id: 31, name: 'SJCE (JSS S&T University)', type: 'Engineering' },
+    { id: 32, name: 'NIE Mysore', type: 'Engineering' },
+    { id: 1, name: "Maharaja's College", type: 'Arts / Commerce' },
+    { id: 41, name: 'Bharath Matha FGC', type: 'Computer Applications' },
+  ];
 
   return (
     <div className="home">
-      <header className="header">
-        <h1>🎓 Smart Campus Finder</h1>
-        <p>Discover campuses, buildings, and points of interest</p>
-      </header>
+      {/* Hero Section */}
+      <section className="hero">
+        <h1>Welcome to <span className="highlight">Smart Campus Finder</span></h1>
+        <p>Discover the perfect college for your future in Mysore region</p>
+        <Link to="/explore" className="cta-button">
+          <FiSearch style={{ marginRight: '8px' }} /> Explore Colleges
+        </Link>
+      </section>
+      {/* Stats Section */}
+      <section className="stats-section">
+        <h2>At a Glance</h2>
+        <div className="stats-grid">
+          {stats.map((stat, index) => (
+            <div key={index} className="stat-card">
+              <span className="stat-icon">{stat.icon}</span>
+              <span className="stat-value">{stat.value}</span>
+              <span className="stat-label">{stat.label}</span>
+            </div>
+          ))}
+        </div>
+      </section>
 
-      <div className="main-layout">
-        <aside className="sidebar">
-          <Filters 
-            searchTerm={searchTerm} 
-            onSearchChange={setSearchTerm}
-            minFee={minFee}
-            maxFee={maxFee}
-            onMinFeeChange={setMinFee}
-            onMaxFeeChange={setMaxFee}
-            selectedStreams={selectedStreams}
-            onStreamChange={setSelectedStreams}
-            locationSearch={locationSearch}
-            onLocationChange={setLocationSearch}
-          />
-        </aside>
-        
-        <main className="content">
-          <p className="results-count">
-            Showing {filteredCampuses.length} of {campuses.length} colleges
-          </p>
-          <div className="campus-grid">
-            {filteredCampuses.length === 0 ? (
-              <p className="no-results">No campuses found matching your filters.</p>
-            ) : (
-              filteredCampuses.map(campus => (
-                <CampusCard key={campus.id} campus={campus} />
-              ))
-            )}
-          </div>
-        </main>
-      </div>
+      {/* Featured Colleges */}
+      <section className="featured-section">
+        <h2>Featured Colleges</h2>
+        <div className="featured-grid">
+          {featuredColleges.map((college) => (
+            <div key={college.id} className="featured-card">
+              <h3>{college.name}</h3>
+              <span className="college-type">{college.type}</span>
+              <Link to="/explore" className="view-btn">View Details →</Link>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Quick Actions */}
+      <section className="actions-section">
+        <h2>Quick Actions</h2>
+        <div className="actions-grid">
+          <Link to="/explore" className="action-card">
+            <span className="action-icon"><FiSearch /></span>
+            <span>Search Colleges</span>
+          </Link>
+          <Link to="/explore" className="action-card">
+            <span className="action-icon"><FiBarChart2 /></span>
+            <span>Compare Colleges</span>
+          </Link>
+          <Link to="/contact" className="action-card">
+            <span className="action-icon"><FiMessageCircle /></span>
+            <span>Get Help</span>
+          </Link>
+        </div>
+      </section>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

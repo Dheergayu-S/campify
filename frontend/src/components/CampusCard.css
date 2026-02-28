@@ -1,34 +1,30 @@
 .campus-card {
   background: #ffffff;
-  border-radius: 12px;
-  padding: 24px;
-  border: 1px solid #e0e0e0;
-  transition: all 0.3s ease;
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid #e3e8ee;
+  transition: border-color 0.15s;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .campus-card:hover {
-  transform: translateY(-4px);
-  border-color: #667eea;
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+  border-color: #635bff;
 }
 
 .campus-card.expanded {
-  border-color: #667eea;
-  transform: none;
+  border-color: #635bff;
 }
 
 .campus-name {
-  color: #333333;
-  margin-bottom: 10px;
-  font-size: 1.3rem;
+  color: #0a2540;
+  margin-bottom: 8px;
+  font-size: 1.1rem;
   font-weight: 600;
 }
 
 .campus-location {
-  color: #666666;
-  font-size: 0.95rem;
+  color: #425466;
+  font-size: 0.9rem;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -36,27 +32,27 @@
 
 .campus-fees {
   color: #16a34a;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   margin-top: 8px;
 }
 
 .campus-hint {
-  color: #999999;
-  font-size: 0.8rem;
-  margin-top: 12px;
+  color: #adbdcc;
+  font-size: 0.75rem;
+  margin-top: 10px;
 }
 
 .loading-text {
-  color: #667eea;
-  font-size: 0.9rem;
+  color: #635bff;
+  font-size: 0.85rem;
   margin-top: 10px;
 }
 
 .expanded-content {
   margin-top: 16px;
   padding-top: 16px;
-  border-top: 1px solid #e8e8e8;
+  border-top: 1px solid #e3e8ee;
 }
 
 .courses-list {
@@ -65,8 +61,8 @@
 
 .courses-list h4,
 .buildings-list h4 {
-  color: #667eea;
-  font-size: 0.95rem;
+  color: #635bff;
+  font-size: 0.9rem;
   margin-bottom: 10px;
 }
 
@@ -80,28 +76,28 @@
   display: flex;
   flex-direction: column;
   padding: 0;
-  background: #f8f9fa;
-  border-radius: 8px;
+  background: #f6f9fc;
+  border-radius: 6px;
   margin-bottom: 8px;
   overflow: hidden;
-  border: 1px solid #e8e8e8;
+  border: 1px solid #e3e8ee;
 }
 
 .courses-list li.course-item.course-expanded {
-  background: #f0f2f5;
+  background: #f0f4f8;
 }
 
 .course-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px;
+  padding: 10px 12px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.15s;
 }
 
 .course-header:hover {
-  background: rgba(102, 126, 234, 0.05);
+  background: rgba(99, 91, 255, 0.05);
 }
 
 .course-header-right {
@@ -111,29 +107,29 @@
 }
 
 .course-toggle {
-  color: #999999;
-  font-size: 0.75rem;
+  color: #adbdcc;
+  font-size: 0.7rem;
 }
 
 .course-name {
-  color: #444444;
-  font-size: 0.9rem;
+  color: #0a2540;
+  font-size: 0.85rem;
 }
 
 .course-fee {
   color: #16a34a;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 600;
 }
 
 .course-details {
   padding: 0 12px 12px 12px;
-  border-top: 1px solid #e8e8e8;
+  border-top: 1px solid #e3e8ee;
 }
 
 .course-detail-item {
-  padding: 10px 0;
-  border-bottom: 1px solid #f0f0f0;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f4f8;
 }
 
 .course-detail-item:last-child {
@@ -141,15 +137,15 @@
 }
 
 .detail-label {
-  color: #666666;
-  font-size: 0.8rem;
+  color: #425466;
+  font-size: 0.75rem;
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .detail-value {
-  color: #333333;
-  font-size: 0.85rem;
+  color: #0a2540;
+  font-size: 0.8rem;
   line-height: 1.5;
 }
 
@@ -161,18 +157,18 @@
 }
 
 .exam-tag {
-  background: rgba(102, 126, 234, 0.1);
-  color: #667eea;
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 0.75rem;
+  background: rgba(99, 91, 255, 0.1);
+  color: #635bff;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 0.7rem;
   font-weight: 500;
 }
 
 .no-details {
-  color: #999999;
-  font-size: 0.85rem;
-  padding: 10px 0;
+  color: #adbdcc;
+  font-size: 0.8rem;
+  padding: 8px 0;
 }
 
 .buildings-list {
@@ -180,21 +176,22 @@
 }
 
 .buildings-list li {
-  color: #555555;
-  font-size: 0.9rem;
-  padding: 6px 0;
+  color: #425466;
+  font-size: 0.85rem;
+  padding: 5px 0;
   padding-left: 24px;
   position: relative;
 }
 
 .buildings-list li::before {
-  content: '🏢';
+  content: '•';
   position: absolute;
   left: 0;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
+  color: #635bff;
 }
 
 .no-data {
-  color: #999999;
-  font-size: 0.9rem;
+  color: #adbdcc;
+  font-size: 0.85rem;
 }

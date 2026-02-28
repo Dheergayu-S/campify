@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { FiMapPin, FiDollarSign, FiBook, FiFileText, FiEdit3 } from 'react-icons/fi'
+import { HiOutlineOfficeBuilding } from 'react-icons/hi'
 import { getCampusBuildings } from '../services/api'
 import './CampusCard.css'
 
@@ -48,9 +50,9 @@ function CampusCard({ campus }) {
   return (
     <div className={`campus-card ${expanded ? 'expanded' : ''}`} onClick={handleClick}>
       <h3 className="campus-name">{campus.name}</h3>
-      <p className="campus-location">📍 {campus.location}</p>
+      <p className="campus-location"><FiMapPin style={{ marginRight: '6px' }} /> {campus.location}</p>
       {getFeeDisplay() && (
-        <p className="campus-fees">💰 {getFeeDisplay()} / year</p>
+        <p className="campus-fees"><FiDollarSign style={{ marginRight: '6px' }} /> {getFeeDisplay()} / year</p>
       )}
       <p className="campus-hint">Click to {expanded ? 'collapse' : 'view details'}</p>
       
@@ -60,7 +62,7 @@ function CampusCard({ campus }) {
         <div className="expanded-content">
           {campus.courses && campus.courses.length > 0 && (
             <div className="courses-list">
-              <h4>📚 Courses Offered</h4>
+              <h4><FiBook style={{ marginRight: '6px' }} /> Courses Offered</h4>
               <ul>
                 {campus.courses.map(course => (
                   <li key={course.id} className={`course-item ${expandedCourse === course.id ? 'course-expanded' : ''}`}>
@@ -79,14 +81,14 @@ function CampusCard({ campus }) {
                       <div className="course-details">
                         {course.eligibility && (
                           <div className="course-detail-item">
-                            <span className="detail-label">📋 Eligibility:</span>
+                            <span className="detail-label"><FiFileText style={{ marginRight: '4px' }} /> Eligibility:</span>
                             <span className="detail-value">{course.eligibility}</span>
                           </div>
                         )}
                         
                         {course.exams && course.exams.length > 0 && (
                           <div className="course-detail-item">
-                            <span className="detail-label">📝 Entrance Exams:</span>
+                            <span className="detail-label"><FiEdit3 style={{ marginRight: '4px' }} /> Entrance Exams:</span>
                             <div className="exam-tags">
                               {course.exams.map(exam => (
                                 <span key={exam.id} className="exam-tag">{exam.name}</span>
@@ -108,7 +110,7 @@ function CampusCard({ campus }) {
           
           {buildings.length > 0 && (
             <div className="buildings-list">
-              <h4>🏛️ Buildings</h4>
+              <h4><HiOutlineOfficeBuilding style={{ marginRight: '6px' }} /> Buildings</h4>
               <ul>
                 {buildings.map(building => (
                   <li key={building.id}>{building.name}</li>
