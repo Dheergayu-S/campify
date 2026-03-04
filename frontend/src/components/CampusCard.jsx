@@ -1,10 +1,12 @@
 import { useState } from 'react'
-import { FiMapPin, FiDollarSign, FiBook, FiFileText, FiEdit3 } from 'react-icons/fi'
+import { useNavigate } from 'react-router-dom'
+import { FiMapPin, FiBook, FiFileText, FiEdit3, FiGlobe, FiHeart } from 'react-icons/fi'
 import { HiOutlineOfficeBuilding } from 'react-icons/hi'
 import { getCampusBuildings } from '../services/api'
 import './CampusCard.css'
 
-function CampusCard({ campus }) {
+function CampusCard({ campus, isWishlisted, onToggleWishlist }) {
+  const navigate = useNavigate()
   const [buildings, setBuildings] = useState([])
   const [expanded, setExpanded] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -49,10 +51,32 @@ function CampusCard({ campus }) {
 
   return (
     <div className={`campus-card ${expanded ? 'expanded' : ''}`} onClick={handleClick}>
-      <h3 className="campus-name">{campus.name}</h3>
+      <div className="campus-top">
+        <h3 className="campus-name">{campus.name}</h3>
+        <button
+          className={`wishlist-btn ${isWishlisted ? 'active' : ''}`}
+          onClick={(e) => {
+            e.stopPropagation()
+            if (onToggleWishlist) {
+              onToggleWishlist(campus.id)
+            } else {
+              navigate('/login')
+            }
+          }}
+          title={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+        >
+          <FiHeart style={isWishlisted ? { fill: '#e53935', stroke: '#e53935' } : {}} />
+        </button>
+      </div>
       <p className="campus-location"><FiMapPin style={{ marginRight: '6px' }} /> {campus.location}</p>
       {getFeeDisplay() && (
-        <p className="campus-fees"><FiDollarSign style={{ marginRight: '6px' }} /> {getFeeDisplay()} / year</p>
+        <p className="campus-fees">{getFeeDisplay()} / year</p>
+      )}
+      {campus.website && (
+        <p className="campus-website" onClick={e => e.stopPropagation()}>
+          <FiGlobe style={{ marginRight: '6px' }} />
+          <a href={campus.website} target="_blank" rel="noopener noreferrer">{campus.website.replace(/^https?:\/\//, '')}</a>
+        </p>
       )}
       <p className="campus-hint">Click to {expanded ? 'collapse' : 'view details'}</p>
       

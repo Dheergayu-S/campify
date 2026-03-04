@@ -20,6 +20,7 @@ def campus_to_response(campus: Campus) -> dict:
         "id": campus.id,
         "name": campus.name,
         "location": campus.location,
+        "website": campus.website,
         "courses": [
             {
                 "id": c.id, 

@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes import campus_router, building_router, poi_router, course_router, exam_router
+from app.routes import campus_router, building_router, poi_router, course_router, exam_router, auth_router, admin_router, wishlist_router
 
-app = FastAPI(title="Smart Campus Finder API")
+app = FastAPI(title="StudySeekers API")
 
 # CORS - allow frontend
 app.add_middleware(
@@ -19,11 +19,14 @@ app.include_router(building_router)
 app.include_router(poi_router)
 app.include_router(course_router)
 app.include_router(exam_router)
+app.include_router(auth_router)
+app.include_router(admin_router)
+app.include_router(wishlist_router)
 
 
 @app.get("/")
 def root():
-    return {"message": "Smart Campus Finder API is running"}
+    return {"message": "StudySeekers API is running"}
 
 
 if __name__ == "__main__":

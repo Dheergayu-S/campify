@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FiSearch, FiMapPin, FiBook, FiDollarSign } from 'react-icons/fi'
+import { FiSearch, FiMapPin, FiBook } from 'react-icons/fi'
 import './Filters.css'
 
 const STREAMS = [
@@ -134,7 +134,7 @@ function Filters({
           className="filter-title"
           onClick={() => setShowFees(!showFees)}
         >
-          <span><FiDollarSign style={{ marginRight: '6px' }} /> Fee Range</span>
+          <span>₹ Fee Range</span>
           <span className="toggle-icon">{showFees ? '▲' : '▼'}</span>
         </div>
         {showFees && (

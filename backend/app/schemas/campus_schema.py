@@ -25,12 +25,14 @@ class CourseInCampus(BaseModel):
 class CampusCreate(BaseModel):
     name: str
     location: str
+    website: Optional[str] = None
 
 
 class CampusRead(BaseModel):
     id: int
     name: str
     location: str
+    website: Optional[str] = None
     courses: List[CourseInCampus] = []
     min_fee: Optional[int] = None
     max_fee: Optional[int] = None

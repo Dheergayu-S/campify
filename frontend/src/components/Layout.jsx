@@ -1,5 +1,4 @@
 import Navbar from './Sidebar';
-import './Layout.css';
 
 const Layout = ({ children }) => {
   return (

@@ -23,13 +23,13 @@ const Contact = () => {
   };
 
   return (
-    <div className="contact">
+    <div className="contact page">
       <h1>Contact Us</h1>
       <p className="subtitle">Have questions? We'd love to hear from you!</p>
 
       <div className="contact-container">
         {/* Contact Form */}
-        <div className="contact-form-section">
+        <div className="contact-form-section card">
           <h2>Send us a Message</h2>
           
           {submitted && (
@@ -87,14 +87,14 @@ const Contact = () => {
               />
             </div>
 
-            <button type="submit" className="submit-btn">
+            <button type="submit" className="submit-btn btn">
               <FiSend style={{ marginRight: '8px' }} /> Send Message
             </button>
           </form>
         </div>
 
         {/* Contact Info */}
-        <div className="contact-info-section">
+        <div className="contact-info-section card">
           <h2>Get in Touch</h2>
           
           <div className="info-cards">

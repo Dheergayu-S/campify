@@ -1,14 +1,16 @@
 import { Link } from 'react-router-dom';
-import { FiSearch, FiBarChart2, FiMessageCircle } from 'react-icons/fi';
+import { FiSearch } from 'react-icons/fi';
 import { HiOutlineOfficeBuilding, HiOutlineBookOpen, HiOutlineCollection, HiOutlineLocationMarker } from 'react-icons/hi';
 import './Home.css';
 
 const Home = () => {
+ 
+
   const stats = [
     { icon: <HiOutlineOfficeBuilding />, value: '41', label: 'Colleges' },
-    { icon: <HiOutlineBookOpen />, value: '150+', label: 'Courses' },
+    { icon: <HiOutlineBookOpen />, value: '10', label: 'Courses' },
     { icon: <HiOutlineCollection />, value: '6', label: 'Streams' },
-    { icon: <HiOutlineLocationMarker />, value: 'Mysore', label: 'Region' },
+    { icon: <HiOutlineLocationMarker />, value: 'Southern Karnataka', sublabel: '(currently Mysore)', label: 'Region' },
   ];
 
   const featuredColleges = [
@@ -19,23 +21,25 @@ const Home = () => {
   ];
 
   return (
-    <div className="home">
+    <div className="home page">
       {/* Hero Section */}
-      <section className="hero">
-        <h1>Welcome to <span className="highlight">Smart Campus Finder</span></h1>
-        <p>Discover the perfect college for your future in Mysore region</p>
-        <Link to="/explore" className="cta-button">
+      <section className="hero card">
+        <h1>Welcome to <span className="highlight">StudySeekers</span></h1>
+        <p>Find the right college across Southern Karnataka — all in one place</p>
+        <Link to="/explore" className="cta-button btn">
           <FiSearch style={{ marginRight: '8px' }} /> Explore Colleges
         </Link>
       </section>
+
       {/* Stats Section */}
       <section className="stats-section">
-        <h2>At a Glance</h2>
+        <h2>Overview</h2>
         <div className="stats-grid">
           {stats.map((stat, index) => (
-            <div key={index} className="stat-card">
+            <div key={index} className="stat-card card">
               <span className="stat-icon">{stat.icon}</span>
               <span className="stat-value">{stat.value}</span>
+              {stat.sublabel && <span className="stat-sublabel">{stat.sublabel}</span>}
               <span className="stat-label">{stat.label}</span>
             </div>
           ))}
@@ -47,31 +51,12 @@ const Home = () => {
         <h2>Featured Colleges</h2>
         <div className="featured-grid">
           {featuredColleges.map((college) => (
-            <div key={college.id} className="featured-card">
+            <div key={college.id} className="featured-card card">
               <h3>{college.name}</h3>
               <span className="college-type">{college.type}</span>
               <Link to="/explore" className="view-btn">View Details →</Link>
             </div>
           ))}
-        </div>
-      </section>
-
-      {/* Quick Actions */}
-      <section className="actions-section">
-        <h2>Quick Actions</h2>
-        <div className="actions-grid">
-          <Link to="/explore" className="action-card">
-            <span className="action-icon"><FiSearch /></span>
-            <span>Search Colleges</span>
-          </Link>
-          <Link to="/explore" className="action-card">
-            <span className="action-icon"><FiBarChart2 /></span>
-            <span>Compare Colleges</span>
-          </Link>
-          <Link to="/contact" className="action-card">
-            <span className="action-icon"><FiMessageCircle /></span>
-            <span>Get Help</span>
-          </Link>
         </div>
       </section>
     </div>

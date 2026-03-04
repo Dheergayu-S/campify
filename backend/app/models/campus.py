@@ -9,6 +9,7 @@ class Campus(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(255), nullable=False)
     location = Column(String(255), nullable=False)
+    website = Column(String(500), nullable=True)
     
     buildings = relationship("Building", back_populates="campus")
     courses = relationship("Course", back_populates="campus")

@@ -1,6 +1,7 @@
+/* Filters Sidebar */
 .filters-sidebar {
-  background: #ffffff;
-  border: 1px solid #e3e8ee;
+  background: var(--white);
+  border: 1px solid var(--border);
   border-radius: 8px;
   padding: 16px;
   position: sticky;
@@ -13,11 +14,10 @@
   align-items: center;
   margin-bottom: 16px;
   padding-bottom: 12px;
-  border-bottom: 1px solid #e3e8ee;
+  border-bottom: 1px solid var(--border);
 }
 
 .filters-header h3 {
-  color: #0a2540;
   font-size: 1rem;
   margin: 0;
   font-weight: 600;
@@ -26,13 +26,13 @@
 .clear-all-btn {
   background: none;
   border: none;
-  color: #635bff;
+  color: var(--primary);
   font-size: 0.8rem;
   cursor: pointer;
 }
 
 .clear-all-btn:hover {
-  color: #e53935;
+  color: var(--red);
 }
 
 .filter-section {
@@ -45,23 +45,11 @@
 
 .search-box input {
   width: 100%;
-  background: #f6f9fc;
-  border: 1px solid #e3e8ee;
-  border-radius: 6px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   padding: 10px 12px;
-  color: #0a2540;
   font-size: 0.85rem;
-  outline: none;
-  transition: border-color 0.15s;
-  box-sizing: border-box;
-}
-
-.search-box input:focus {
-  border-color: #635bff;
-}
-
-.search-box input::placeholder {
-  color: #adbdcc;
 }
 
 .filter-title {
@@ -70,18 +58,17 @@
   align-items: center;
   padding: 10px 0;
   cursor: pointer;
-  color: #0a2540;
   font-weight: 500;
   font-size: 0.9rem;
-  border-bottom: 1px solid #e3e8ee;
+  border-bottom: 1px solid var(--border);
 }
 
 .filter-title:hover {
-  color: #635bff;
+  color: var(--primary);
 }
 
 .toggle-icon {
-  color: #adbdcc;
+  color: var(--light);
   font-size: 0.7rem;
 }
 
@@ -91,23 +78,11 @@
 
 .location-input {
   width: 100%;
-  background: #f6f9fc;
-  border: 1px solid #e3e8ee;
-  border-radius: 6px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   padding: 10px 12px;
-  color: #0a2540;
   font-size: 0.85rem;
-  outline: none;
-  transition: border-color 0.15s;
-  box-sizing: border-box;
-}
-
-.location-input:focus {
-  border-color: #635bff;
-}
-
-.location-input::placeholder {
-  color: #adbdcc;
 }
 
 .checkbox-item {
@@ -119,27 +94,27 @@
 }
 
 .checkbox-item:hover {
-  background: #f6f9fc;
+  background: var(--bg);
   margin: 0 -8px;
   padding: 6px 8px;
   border-radius: 4px;
 }
 
 .checkbox-item input[type="checkbox"] {
-  accent-color: #635bff;
+  accent-color: var(--primary);
   width: 14px;
   height: 14px;
   cursor: pointer;
 }
 
 .checkbox-item span {
-  color: #425466;
+  color: var(--muted);
   font-size: 0.85rem;
 }
 
 .fee-label {
   font-size: 0.75rem;
-  color: #425466;
+  color: var(--muted);
   margin-bottom: 8px;
   font-weight: 500;
 }
@@ -152,37 +127,26 @@
 
 .fee-range input {
   flex: 1;
-  background: #f6f9fc;
-  border: 1px solid #e3e8ee;
-  border-radius: 6px;
-  padding: 10px 10px;
-  color: #0a2540;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px;
   font-size: 0.8rem;
-  outline: none;
-  transition: border-color 0.15s;
   min-width: 0;
 }
 
-.fee-range input:focus {
-  border-color: #635bff;
-}
-
-.fee-range input::placeholder {
-  color: #adbdcc;
-}
-
 .fee-separator {
-  color: #adbdcc;
+  color: var(--light);
   font-size: 0.8rem;
 }
 
 .active-filters {
   padding-top: 12px;
-  border-top: 1px solid #e3e8ee;
+  border-top: 1px solid var(--border);
 }
 
 .active-label {
-  color: #425466;
+  color: var(--muted);
   font-size: 0.75rem;
   margin-bottom: 8px;
 }
@@ -198,7 +162,7 @@
   align-items: center;
   gap: 4px;
   background: rgba(99, 91, 255, 0.1);
-  color: #635bff;
+  color: var(--primary);
   padding: 4px 8px;
   border-radius: 4px;
   font-size: 0.75rem;
@@ -207,7 +171,7 @@
 .filter-tag button {
   background: none;
   border: none;
-  color: #635bff;
+  color: var(--primary);
   cursor: pointer;
   font-size: 0.9rem;
   padding: 0;
@@ -215,5 +179,5 @@
 }
 
 .filter-tag button:hover {
-  color: #e53935;
+  color: var(--red);
 }

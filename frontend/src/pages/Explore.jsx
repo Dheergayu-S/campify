@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { FiSearch } from 'react-icons/fi'
 import CampusCard from '../components/CampusCard'
 import Filters from '../components/Filters'
-import { getCampuses } from '../services/api'
+import { getCampuses, getWishlist, addToWishlist, removeFromWishlist } from '../services/api'
 import './Explore.css'
 
 function Explore() {
@@ -13,9 +13,13 @@ function Explore() {
   const [maxFee, setMaxFee] = useState('')
   const [selectedStreams, setSelectedStreams] = useState([])
   const [locationSearch, setLocationSearch] = useState('')
+  const [wishlist, setWishlist] = useState([])
+
+  const isLoggedIn = !!localStorage.getItem('token')
 
   useEffect(() => {
     fetchCampuses()
+    if (isLoggedIn) fetchWishlist()
   }, [])
 
   const fetchCampuses = async () => {
@@ -26,6 +30,29 @@ function Explore() {
       console.error('Error fetching campuses:', error)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const fetchWishlist = async () => {
+    try {
+      const data = await getWishlist()
+      setWishlist(data)
+    } catch (err) {
+      console.error('Error fetching wishlist:', err)
+    }
+  }
+
+  const toggleWishlist = async (campusId) => {
+    try {
+      if (wishlist.includes(campusId)) {
+        await removeFromWishlist(campusId)
+        setWishlist(wishlist.filter(id => id !== campusId))
+      } else {
+        await addToWishlist(campusId)
+        setWishlist([...wishlist, campusId])
+      }
+    } catch (err) {
+      console.error('Wishlist error:', err)
     }
   }
 
@@ -52,10 +79,10 @@ function Explore() {
   }
 
   return (
-    <div className="explore">
-      <header className="explore-header">
+    <div className="explore page">
+      <header className="explore-header page-header">
         <h1><FiSearch style={{ marginRight: '10px' }} /> Explore Colleges</h1>
-        <p>Browse all 41 colleges in Mysore region</p>
+        <p>Browse all 41 colleges in Southern Karnataka</p>
       </header>
 
       <div className="explore-layout">
@@ -83,7 +110,12 @@ function Explore() {
               <p className="no-results">No campuses found matching your filters.</p>
             ) : (
               filteredCampuses.map(campus => (
-                <CampusCard key={campus.id} campus={campus} />
+                <CampusCard
+                  key={campus.id}
+                  campus={campus}
+                  isWishlisted={wishlist.includes(campus.id)}
+                  onToggleWishlist={isLoggedIn ? toggleWishlist : null}
+                />
               ))
             )}
           </div>
