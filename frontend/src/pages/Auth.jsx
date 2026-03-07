@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { FiMail, FiLock, FiUser, FiLogIn, FiUserPlus } from 'react-icons/fi';
+import { FiMail, FiLock, FiUser, FiLogIn, FiUserPlus, FiEye, FiEyeOff } from 'react-icons/fi';
 import { loginUser, registerUser } from '../services/api';
 import './Auth.css';
 
@@ -8,6 +8,7 @@ const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -30,8 +31,8 @@ const Auth = () => {
       if (isLogin) {
         response = await loginUser({ email: formData.email, password: formData.password });
       } else {
-        if (formData.password.length < 6) {
-          setError('Password must be at least 6 characters');
+        if (formData.password.length < 8) {
+          setError('Password must be at least 8 characters');
           setLoading(false);
           return;
         }
@@ -113,15 +114,20 @@ const Auth = () => {
             <label htmlFor="password">
               <FiLock className="field-icon" /> Password
             </label>
-            <input
-              id="password"
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder={isLogin ? 'Enter your password' : 'Min 6 characters'}
-              required
-            />
+            <div className="password-wrapper">
+              <input
+                id="password"
+                type={showPassword ? 'text' : 'password'}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder={isLogin ? 'Enter your password' : 'Min 8 characters'}
+                required
+              />
+              <button type="button" className="eye-btn" onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? <FiEyeOff /> : <FiEye />}
+              </button>
+            </div>
           </div>
 
           <button type="submit" className="auth-submit" disabled={loading}>

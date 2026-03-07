@@ -35,6 +35,23 @@ class CourseUpdate(BaseModel):
     eligibility: Optional[str] = None
     stream: Optional[str] = None
 
+class UserUpdate(BaseModel):
+    name: Optional[str] = None
+    role: Optional[str] = None
+
+
+import re
+
+def validate_college_name(name: str):
+    if not re.match(r"^[A-Za-z .,'()&\-]+$", name):
+        raise HTTPException(status_code=400, detail="College name must contain only letters and basic punctuation (no numbers)")
+
+def validate_fees(fees: int):
+    if fees < 0:
+        raise HTTPException(status_code=400, detail="Fees cannot be negative")
+    if fees > 1000000:
+        raise HTTPException(status_code=400, detail="Fees cannot exceed ₹10,00,000 (10 lakhs)")
+
 
 # Dashboard Stats
 @router.get("/stats")
@@ -50,6 +67,7 @@ def get_stats(admin: User = Depends(get_admin_user), db: Session = Depends(get_d
 # College CRUD
 @router.post("/colleges")
 def add_college(data: CampusCreate, admin: User = Depends(get_admin_user), db: Session = Depends(get_db)):
+    validate_college_name(data.name)
     campus = Campus(name=data.name, location=data.location, website=data.website)
     db.add(campus)
     db.commit()
@@ -63,6 +81,7 @@ def update_college(college_id: int, data: CampusUpdate, admin: User = Depends(ge
     if not college:
         raise HTTPException(status_code=404, detail="College not found")
     if data.name:
+        validate_college_name(data.name)
         college.name = data.name
     if data.location:
         college.location = data.location
@@ -88,6 +107,7 @@ def delete_college(college_id: int, admin: User = Depends(get_admin_user), db: S
 def add_course(data: CourseCreate, admin: User = Depends(get_admin_user), db: Session = Depends(get_db)):
     if not db.query(Campus).filter(Campus.id == data.campus_id).first():
         raise HTTPException(status_code=404, detail="College not found")
+    validate_fees(data.fees)
     course = Course(name=data.name, campus_id=data.campus_id, fees=data.fees,
                     eligibility=data.eligibility, stream=data.stream)
     db.add(course)
@@ -103,6 +123,7 @@ def update_course(course_id: int, data: CourseUpdate, admin: User = Depends(get_
     if data.name:
         course.name = data.name
     if data.fees:
+        validate_fees(data.fees)
         course.fees = data.fees
     if data.eligibility:
         course.eligibility = data.eligibility
@@ -127,3 +148,32 @@ def delete_course(course_id: int, admin: User = Depends(get_admin_user), db: Ses
 def get_users(admin: User = Depends(get_admin_user), db: Session = Depends(get_db)):
     users = db.query(User).all()
     return [{"id": u.id, "name": u.name, "email": u.email, "role": u.role} for u in users]
+
+
+# Update User (change role)
+@router.put("/users/{user_id}")
+def update_user(user_id: int, data: UserUpdate, admin: User = Depends(get_admin_user), db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    if user.id == admin.id:
+        raise HTTPException(status_code=400, detail="Cannot modify your own account")
+    if data.name:
+        user.name = data.name
+    if data.role and data.role in ('user', 'admin'):
+        user.role = data.role
+    db.commit()
+    return {"message": f"User '{user.name}' updated"}
+
+
+# Delete User
+@router.delete("/users/{user_id}")
+def delete_user(user_id: int, admin: User = Depends(get_admin_user), db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    if user.id == admin.id:
+        raise HTTPException(status_code=400, detail="Cannot delete your own account")
+    db.delete(user)
+    db.commit()
+    return {"message": f"User '{user.name}' deleted"}

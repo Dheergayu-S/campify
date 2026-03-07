@@ -4,7 +4,7 @@ import { FiPlus, FiEdit2, FiTrash2, FiUsers, FiBook, FiBarChart2, FiGlobe } from
 import { HiOutlineOfficeBuilding } from 'react-icons/hi';
 import {
   getAdminStats, getCampuses, addCollege, updateCollege, deleteCollege,
-  addCourse, updateCourse, deleteCourse, getAdminUsers
+  addCourse, updateCourse, deleteCourse, getAdminUsers, updateUser, deleteUser
 } from '../services/api';
 import './Admin.css';
 
@@ -23,6 +23,10 @@ const Admin = () => {
   // Course form
   const [cof, setCof] = useState({ name: '', campus_id: '', fees: '', eligibility: '', stream: '' });
   const [editCoId, setEditCoId] = useState(null);
+
+  // User edit
+  const [editUId, setEditUId] = useState(null);
+  const [uf, setUf] = useState({ name: '', role: '' });
 
   const streams = ['Engineering', 'Science', 'Management', 'Computer Applications', 'Arts / Commerce', 'Specialized'];
 
@@ -59,6 +63,7 @@ const Admin = () => {
   // College handlers
   const handleCollegeSave = async (e) => {
     e.preventDefault();
+    if (/[0-9]/.test(cf.name)) { flash('College name must not contain numbers', 'error'); return; }
     try {
       if (editCId) { await updateCollege(editCId, cf); flash('College updated'); }
       else { await addCollege(cf); flash('College added'); }
@@ -75,8 +80,11 @@ const Admin = () => {
   // Course handlers
   const handleCourseSave = async (e) => {
     e.preventDefault();
+    const feesNum = parseInt(cof.fees);
+    if (feesNum > 1000000) { flash('Fees cannot exceed ₹10,00,000 (10 lakhs)', 'error'); return; }
+    if (feesNum < 0) { flash('Fees cannot be negative', 'error'); return; }
     try {
-      const data = { ...cof, campus_id: parseInt(cof.campus_id), fees: parseInt(cof.fees) };
+      const data = { ...cof, campus_id: parseInt(cof.campus_id), fees: feesNum };
       if (editCoId) { await updateCourse(editCoId, data); flash('Course updated'); }
       else { await addCourse(data); flash('Course added'); }
       setCof({ name: '', campus_id: '', fees: '', eligibility: '', stream: '' }); setEditCoId(null); loadData();
@@ -87,6 +95,22 @@ const Admin = () => {
     if (!confirm(`Delete "${name}"?`)) return;
     try { await deleteCourse(courseId); flash(`"${name}" deleted`); loadData(); }
     catch { flash('Delete failed', 'error'); }
+  };
+
+  // User handlers
+  const handleUserSave = async (e) => {
+    e.preventDefault();
+    try {
+      await updateUser(editUId, uf);
+      flash('User updated');
+      setEditUId(null); setUf({ name: '', role: '' }); loadData();
+    } catch (err) { flash(err.response?.data?.detail || 'Error', 'error'); }
+  };
+
+  const handleDeleteUser = async (id, name) => {
+    if (!confirm(`Delete user "${name}"? This cannot be undone.`)) return;
+    try { await deleteUser(id); flash(`"${name}" deleted`); loadData(); }
+    catch (err) { flash(err.response?.data?.detail || 'Delete failed', 'error'); }
   };
 
   return (
@@ -190,12 +214,30 @@ const Admin = () => {
       {/* Users */}
       {tab === 'users' && (
         <div className="admin-section">
+          {editUId && (
+            <form onSubmit={handleUserSave} className="admin-form card">
+              <h3>Edit User</h3>
+              <input type="text" placeholder="Name" value={uf.name} onChange={e => setUf({ ...uf, name: e.target.value })} required />
+              <select value={uf.role} onChange={e => setUf({ ...uf, role: e.target.value })} required>
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+              </select>
+              <div className="form-actions">
+                <button type="submit" className="btn-primary btn"><FiEdit2 /> Update</button>
+                <button type="button" className="btn-secondary" onClick={() => { setEditUId(null); setUf({ name: '', role: '' }); }}>Cancel</button>
+              </div>
+            </form>
+          )}
           <div className="admin-table card"><table>
-            <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th></tr></thead>
+            <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Actions</th></tr></thead>
             <tbody>{users.map(u => (
               <tr key={u.id}>
                 <td>{u.id}</td><td>{u.name}</td><td>{u.email}</td>
                 <td><span className={`role-badge ${u.role}`}>{u.role}</span></td>
+                <td className="actions">
+                  <button className="btn-icon edit" onClick={() => { setUf({ name: u.name, role: u.role }); setEditUId(u.id); }}><FiEdit2 /></button>
+                  <button className="btn-icon delete" onClick={() => handleDeleteUser(u.id, u.name)}><FiTrash2 /></button>
+                </td>
               </tr>
             ))}</tbody>
           </table></div>

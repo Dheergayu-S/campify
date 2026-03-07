@@ -103,6 +103,16 @@ export const getAdminUsers = async () => {
   return response.data
 }
 
+export const updateUser = async (id, data) => {
+  const response = await api.put(`/api/admin/users/${id}`, data)
+  return response.data
+}
+
+export const deleteUser = async (id) => {
+  const response = await api.delete(`/api/admin/users/${id}`)
+  return response.data
+}
+
 // Wishlist API
 export const getWishlist = async () => {
   const response = await api.get('/api/wishlist/')
