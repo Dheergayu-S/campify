@@ -10,15 +10,31 @@ const Contact = () => {
     message: ''
   });
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError('');
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError('Please enter a valid email address');
+      return;
+    }
+    if (formData.name.trim().length < 2) {
+      setError('Name must be at least 2 characters');
+      return;
+    }
+    if (formData.message.trim().length < 10) {
+      setError('Message must be at least 10 characters');
+      return;
+    }
     setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
+    setTimeout(() => setSubmitted(false), 4000);
     setFormData({ name: '', email: '', subject: '', message: '' });
   };
 
@@ -36,6 +52,10 @@ const Contact = () => {
             <div className="success-message">
               <FiCheckCircle style={{ marginRight: '8px' }} /> Message sent successfully! We'll get back to you soon.
             </div>
+          )}
+
+          {error && (
+            <div className="error-message">{error}</div>
           )}
 
           <form onSubmit={handleSubmit} className="contact-form">

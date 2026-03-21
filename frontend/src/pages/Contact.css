@@ -41,6 +41,14 @@
   margin-bottom: 16px;
   font-size: 14px;
 }
+.error-message {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  font-size: 14px;
+}
 
 .contact-form {
   display: flex;
