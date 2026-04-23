@@ -31,12 +31,18 @@ const Auth = () => {
       if (isLogin) {
         response = await loginUser({ email: formData.email, password: formData.password });
       } else {
+        const email = formData.email.trim().toLowerCase();
+        if (!email.endsWith('@gmail.com')) {
+          setError('Email must end with @gmail.com');
+          setLoading(false);
+          return;
+        }
         if (formData.password.length < 8) {
           setError('Password must be at least 8 characters');
           setLoading(false);
           return;
         }
-        response = await registerUser(formData);
+        response = await registerUser({ ...formData, email });
       }
 
       // Save token and user info

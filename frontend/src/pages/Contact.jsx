@@ -19,14 +19,23 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      setError('Please enter a valid email address');
+    const name = formData.name.trim();
+    const email = formData.email.trim().toLowerCase();
+
+    // Enforce letters-only names and Gmail-only emails.
+    const nameRegex = /^[A-Za-z ]+$/;
+    const emailRegex = /^[A-Za-z0-9._%+-]+@gmail\.com$/;
+
+    if (!emailRegex.test(email)) {
+      setError('Please use a valid @gmail.com email address');
       return;
     }
-    if (formData.name.trim().length < 2) {
+    if (name.length < 2) {
       setError('Name must be at least 2 characters');
+      return;
+    }
+    if (!nameRegex.test(name)) {
+      setError('Name must contain only letters and spaces');
       return;
     }
     if (formData.message.trim().length < 10) {
@@ -50,7 +59,7 @@ const Contact = () => {
           
           {submitted && (
             <div className="success-message">
-              <FiCheckCircle style={{ marginRight: '8px' }} /> Message sent successfully! We'll get back to you soon.
+              <FiCheckCircle style={{ marginRight: '8px' }} /> Acknowledgement: Message sent successfully! We'll get back to you soon.
             </div>
           )}
 
