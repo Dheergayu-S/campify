@@ -59,7 +59,9 @@ const Contact = () => {
           
           {submitted && (
             <div className="success-message">
-              <FiCheckCircle style={{ marginRight: '8px' }} /> Acknowledgement: Message sent successfully! We'll get back to you soon.
+              <FiCheckCircle style={{ marginRight: '8px' }} />
+              <strong>Acknowledgement:</strong><br />
+              Message sent successfully! We'll get back to you soon.
             </div>
           )}
 
@@ -81,13 +83,13 @@ const Contact = () => {
             </div>
 
             <div className="form-group">
-              <label>Email Address</label>
+              <label>Email Address (Only @gmail.com accepted)</label>
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="Enter your email"
+                placeholder="example@gmail.com"
                 required
               />
             </div>

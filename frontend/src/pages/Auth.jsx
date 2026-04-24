@@ -26,12 +26,20 @@ const Auth = () => {
     setLoading(true);
     setError('');
 
+    const email = formData.email.trim().toLowerCase();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      setError('Please enter a valid email address');
+      setLoading(false);
+      return;
+    }
+
     try {
       let response;
       if (isLogin) {
-        response = await loginUser({ email: formData.email, password: formData.password });
+        response = await loginUser({ email, password: formData.password });
       } else {
-        const email = formData.email.trim().toLowerCase();
         if (!email.endsWith('@gmail.com')) {
           setError('Email must end with @gmail.com');
           setLoading(false);
@@ -103,7 +111,7 @@ const Auth = () => {
 
           <div className="form-field">
             <label htmlFor="email">
-              <FiMail className="field-icon" /> Email Address
+              <FiMail className="field-icon" /> Email Address (Only @gmail.com accepted)
             </label>
             <input
               id="email"
@@ -111,7 +119,7 @@ const Auth = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="you@example.com"
+              placeholder="example@gmail.com"
               required
             />
           </div>
