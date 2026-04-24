@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { FiSearch } from 'react-icons/fi';
 import { HiOutlineOfficeBuilding, HiOutlineBookOpen, HiOutlineCollection, HiOutlineLocationMarker } from 'react-icons/hi';
+import iiscHero from '../assets/IISc.webp';
 import './Home.css';
 
 const Home = () => {
@@ -24,6 +25,18 @@ const Home = () => {
     <div className="home page">
       {/* Hero Section */}
       <section className="hero card">
+        <img
+          src={iiscHero}
+          alt="IISc campus"
+          style={{
+            width: 'min(100%, 760px)',
+            height: 'auto',
+            display: 'block',
+            margin: '0 auto 22px',
+            borderRadius: '12px',
+            border: '1px solid var(--border)'
+          }}
+        />
         <h1>Welcome to <span className="highlight">StudySeekers</span></h1>
         <p>Find the right college across Southern Karnataka — all in one place</p>
         <Link to="/explore" className="cta-button btn">

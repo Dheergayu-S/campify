@@ -60,7 +60,6 @@ const Contact = () => {
           {submitted && (
             <div className="success-message">
               <FiCheckCircle style={{ marginRight: '8px' }} />
-              <strong>Acknowledgement:</strong><br />
               Message sent successfully! We'll get back to you soon.
             </div>
           )}
